@@ -1,0 +1,68 @@
+{% extends 'base/base.html' %}
+{% block title %} Профиль {% endblock %}
+{% block content %}
+{% load user_filters %}
+<main role="main" class="container">
+    <div class="row">
+      <div class="col-md-3 mb-3 mt-1">
+        <div class="card">
+          <div class="card-body">
+            <div class="h2">
+              {{ author.first_name }}
+              {{ author.last_name }}
+            </div>
+            <div class="h3 text-muted">
+               {{ author.username }}
+             </div>
+           </div>
+           <ul class="list-group list-group-flush">
+             <li class="list-group-item">
+               <div class="h6 text-muted">
+                 Подписан: {{ follower }} <br />
+                 Подписчиков: {{ following }} 
+                </div>
+             </li>
+             <li class="list-group-item">
+                <div class="h6 text-muted">
+                  Записей: {{ count }}
+                 </div>
+              </li>
+              {% if request.user.username != author.username %}
+              <li class="list-group-item">
+                {% if following %}
+                <a class="btn btn-lg btn-light" 
+                        href="{% url 'profile_unfollow' author.username %}" role="button"> 
+                        Отписаться 
+                </a> 
+                {% else %}
+                <a class="btn btn-lg btn-primary" 
+                        href="{% url 'profile_follow' author.username %}" role="button">
+                Подписаться 
+                </a>
+                {% endif %}
+                {% endif %}
+            </li> 
+            </ul>
+          </div>
+       </div>
+  
+       <div class="col-md">
+        {% for post in page %}
+          <div class="card mb-3 mt-1 shadow-sm">
+            <div class="card-body">
+              <p class="card-text">
+                <!-- Ссылка на страницу автора в атрибуте href; username автора в тексте ссылки -->
+                <span>Пользователь: </span>
+                <a href="{% url 'profile' author.username %}">
+                  <strong class="text-gray-dark">{{ author.username }}</strong>
+               </a>
+                {% include "posts/post_item.html" with post=post %} 
+            </div>
+          </div>
+          {% endfor %}
+          {% include "base/paginator.html" %}
+       </div>
+    </div>  
+     
+    {% endblock %}
+  </main> 

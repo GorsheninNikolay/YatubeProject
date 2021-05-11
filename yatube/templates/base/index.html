@@ -1,0 +1,16 @@
+{% extends "base/base.html" %}
+    {% block title %}Последние обновления на сайте{% endblock %}
+    {% block header %}Последние обновления на сайте{% endblock %}
+    {% block content %}
+    {% include "menu.html" %}
+        <h1> Последние обновления на сайте<h1>
+    {% for post in page %}
+        <h3>
+            Автор: <a href="{% url 'profile' post.author %}">{{ post.author }}</a>, Дата публикации: {{ post.pub_date|date:"d M Y" }}
+        </h3>
+        
+        {% include "posts/post_item.html" with post=post %}
+        {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+    {% include "base/paginator.html" %}
+{% endblock %}
