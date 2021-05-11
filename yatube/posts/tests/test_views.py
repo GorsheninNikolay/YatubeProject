@@ -28,7 +28,7 @@ class PostsPagesTests(TestCase):
             text='Test',
             author=cls.user,
             group=cls.group,
-            image='posts/test.jpeg'
+            image='posts/test.png'
         )
 
     def setUp(self):
@@ -39,7 +39,7 @@ class PostsPagesTests(TestCase):
         self.another_authorized_client.force_login(self.another_user)
 
     def post_fields_test(self, response: http,
-                     page: str, n: Optional[int] = None) -> None:
+                         page: str, n: Optional[int] = None) -> None:
         if n is not None:
             page_object = response.context[page][n]
         else:
@@ -124,7 +124,8 @@ class PostsPagesTests(TestCase):
         self.post_fields_test(response, 'page', 0)
 
     def test_posts_follower_authors(self):
-        """Post located on the author page but dont located on the page another author"""
+        """Post located on the author page but
+        dont located on the page another author"""
         reverse_follow = reverse('profile_follow', args=[self.user])
         response = self.another_authorized_client.get(reverse_follow)
         self.assertEqual(Follow.objects.all().count(), 1)

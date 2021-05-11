@@ -26,7 +26,7 @@ class PostsCreateFormTests(TestCase):
             text='Test',
             author=cls.user,
             group=cls.group,
-            image='posts/test.jpeg'
+            image='posts/test.png'
         )
 
     def setUp(self):

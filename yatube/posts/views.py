@@ -132,7 +132,6 @@ def profile_unfollow(request, username):
     Follow.objects.get(user=request.user, author=author).delete()
     return redirect('profile', username=author)
 
-
 def page_not_found(request, exception):
     return render(
         request,

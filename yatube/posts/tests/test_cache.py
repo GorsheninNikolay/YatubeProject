@@ -34,6 +34,5 @@ class CacheTests(TestCase):
         self.authorized_client.force_login(self.user)
 
     def test_cache(self):
-        response = self.guest_client.get(reverse('index'))
         cache = make_template_fragment_key('index_page')
         self.assertTrue(cache)
