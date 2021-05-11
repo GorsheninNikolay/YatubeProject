@@ -55,7 +55,6 @@ class PostsPagesTests(TestCase):
         self.assertEqual(date, self.post.pub_date)
         self.assertEqual(image, self.post.image)
 
-
     def test_pages_use_correct_template(self):
         """URL uses correct template."""
         templates_pages_names = {
@@ -133,7 +132,6 @@ class PostsPagesTests(TestCase):
         self.post_fields_test(response, 'page', 0)
         response = self.authorized_client.get(reverse('follow_index'))
         self.assertTrue(len(response.context['page']) == 0)
-
 
     def test_follow(self):
         """User can follow and unfollow for the another user"""

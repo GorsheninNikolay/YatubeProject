@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
-from django.urls import reverse
 from django.core.cache.utils import make_template_fragment_key
 
 from posts.models import Post, Group
