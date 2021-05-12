@@ -84,3 +84,7 @@ class PostsURLTests(TestCase):
             with self.subTest(adress=adress):
                 response = self.authorized_client.get(adress)
                 self.assertTemplateUsed(response, template)
+
+    def test_unknown_page(self):
+        response = self.guest_client.get('/unkonwn_page/')
+        self.assertTemplateUsed(response, 'misc/404.html')

@@ -18,8 +18,8 @@
            <ul class="list-group list-group-flush">
              <li class="list-group-item">
                <div class="h6 text-muted">
-                 Подписан: {{ follower }} <br />
-                 Подписчиков: {{ following }} 
+                 Подписан: {{ author.follower.count }} <br />
+                 Подписчиков: {{ author.following.count }} 
                 </div>
              </li>
              <li class="list-group-item">
@@ -29,7 +29,7 @@
               </li>
               {% if request.user.username != author.username %}
               <li class="list-group-item">
-                {% if following %}
+                {% if author.following.exists is True %}
                 <a class="btn btn-lg btn-light" 
                         href="{% url 'profile_unfollow' author.username %}" role="button"> 
                         Отписаться 
@@ -52,10 +52,6 @@
             <div class="card-body">
               <p class="card-text">
                 <!-- Ссылка на страницу автора в атрибуте href; username автора в тексте ссылки -->
-                <span>Пользователь: </span>
-                <a href="{% url 'profile' author.username %}">
-                  <strong class="text-gray-dark">{{ author.username }}</strong>
-               </a>
                 {% include "posts/post_item.html" with post=post %} 
             </div>
           </div>
