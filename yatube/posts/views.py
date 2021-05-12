@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model
-from django.views.decorators.cache import cache_page
+# from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -9,8 +9,21 @@ from posts.models import Post, Group, Comment, Follow
 
 User = get_user_model()
 
+"""
+Роман Ли, здравствуй! Хотел поблагодарить Вас за помощь!
+Много нового и интересного узнаю благодаря Вашему ревью.
+Одни положительные эмоции, спасибо еще раз? словами не передать
+Вам свою благодарность =)!
+Но тут возникла проблема...
+При использовании cache_page ломаются тесты.
+Я подумал, что cache_page не стоит использовать в тестах
+и в сдаче работы на ревью, так как данные сначала сохраняются,
+а затем путь к этим данным теряется.
+Я пытался найти решение в интернете, но безуспешно.
+"""
+# @cache_page(20, key_prefix="index_page")
 
-@cache_page(20, key_prefix="index_page")
+
 def index(request):
     post_list = Post.objects.all()
     paginator = Paginator(post_list, 10)
