@@ -14,7 +14,9 @@ urlpatterns = [
     path("auth/", include("users.urls")),
     path("auth/", include("django.contrib.auth.urls")),
     path("", include("posts.urls")),
-    path("about/", include("about.urls"))
+    path("about/", include("about.urls")),
+    path('500/', server_error, name='500error'),
+    path('404/', page_not_found, name='404error')
 ]
 
 if settings.DEBUG:
