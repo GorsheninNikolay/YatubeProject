@@ -3,8 +3,8 @@ import tempfile
 from typing import Optional
 
 from django import forms, http
-from django.core.cache import cache
 from django.conf import settings
+from django.core.cache import cache
 from django.urls import reverse
 from django.test import Client, TestCase
 from django.contrib.auth import get_user_model

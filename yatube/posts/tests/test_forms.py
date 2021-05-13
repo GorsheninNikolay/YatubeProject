@@ -90,16 +90,13 @@ class PostsCreateFormTests(TestCase):
         self.assertRedirects(response, reverse(
             'post', args=[self.user, self.post.id]))
         self.assertTrue(Comment.objects.all().count() == 1)
-        url = f'/{self.user}/{self.post.id}/comment/'
-        response = self.guest_client.get(url)
-        self.assertRedirects(response, '/auth/login/?next=' + url)
 
     def test_guest_cant_comment(self):
         form_data = {
             'text': 'Comment!',
             'author': self.user.id
         }
-        response = self.guest_client.post(
+        self.guest_client.post(
             reverse('add_comment', args=[self.user, self.post.id]),
             data=form_data,
             follow=True

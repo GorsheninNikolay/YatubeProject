@@ -37,12 +37,17 @@ def profile(request, username):
     author = get_object_or_404(User, username=username)
     posts = author.posts.all()
     count = posts.count()
+    following = False
+    if request.user.is_authenticated:
+        following = Follow.objects.filter(user=request.user,
+                                          author=author).exists()
     paginator = Paginator(posts, 10)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     return render(request, 'profile.html', {'author': author,
                                             'page': page,
-                                            'count': count})
+                                            'count': count,
+                                            'following': following})
 
 
 def post_view(request, username, post_id):
