@@ -29,7 +29,7 @@
               </li>
               {% if request.user.username != author.username %}
               <li class="list-group-item">
-                {% if author.following.exists is True %}
+                {% if request.user.follower.exists %}
                 <a class="btn btn-lg btn-light" 
                         href="{% url 'profile_unfollow' author.username %}" role="button"> 
                         Отписаться 

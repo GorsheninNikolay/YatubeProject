@@ -34,7 +34,6 @@
           <div class="card mb-3 mt-1 shadow-sm">
             <div class="card-body">
               <p class="card-text">
-                <!-- Ссылка на страницу автора в атрибуте href; username автора в тексте ссылки -->
                 <span>Пользователь: </span>
                 <a href="{% url 'profile' author.username %}">
                   <strong class="text-gray-dark">{{ author.username }}</strong>
@@ -42,7 +41,7 @@
                 {% include "posts/post_item.html" with post=post %} 
               </div>
             </div>
-            {% include "posts/comments.html" %}
+            {% include "posts/comments.html" with post=post %}
           </div>
        </div>
     </div>

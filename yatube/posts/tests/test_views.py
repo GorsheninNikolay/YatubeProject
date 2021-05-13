@@ -3,6 +3,7 @@ import tempfile
 from typing import Optional
 
 from django import forms, http
+from django.core.cache import cache
 from django.conf import settings
 from django.urls import reverse
 from django.test import Client, TestCase
@@ -55,6 +56,7 @@ class PostsPagesTests(TestCase):
         super().tearDownClass()
 
     def setUp(self):
+        cache.clear()
         self.authorized_client = Client()
         self.another_authorized_client = Client()
         self.guest_client = Client()
@@ -152,12 +154,6 @@ class PostsPagesTests(TestCase):
             reverse('follow_index'))
         self.post_fields_test(response, 'page', 0)
 
-    def test_posts_follower_authors(self):
-        """Post locate on the author page"""
-        reverse_follow = reverse('profile_follow', args=[self.user])
-        self.another_authorized_client.get(reverse_follow)
-        self.assertEqual(Follow.objects.all().count(), 1)
-
     def test_posts_follower_authors_dont_shows(self):
         """Post dont locate on the page another author"""
         response = self.authorized_client.get(reverse('follow_index'))
@@ -201,6 +197,7 @@ class PaginatorViewsTest(TestCase):
         ])
 
     def setUp(self):
+        cache.clear()
         self.guest_client = Client()
 
     def test_page_contains_ten_records(self):

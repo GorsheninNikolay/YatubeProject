@@ -1,7 +1,8 @@
 from http import HTTPStatus
 
-from django.contrib.auth import get_user_model
+from django.core.cache import cache
 from django.test import TestCase, Client
+from django.contrib.auth import get_user_model
 
 from posts.models import Post, Group
 
@@ -23,6 +24,7 @@ class PostsURLTests(TestCase):
             group=cls.group)
 
     def setUp(self):
+        cache.clear()
         self.guest_client = Client()
         self.authorized_client = Client()
         self.authorized_client2 = Client()
@@ -87,4 +89,5 @@ class PostsURLTests(TestCase):
 
     def test_unknown_page(self):
         response = self.guest_client.get('/unkonwn_page/')
+        self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
         self.assertTemplateUsed(response, 'misc/404.html')

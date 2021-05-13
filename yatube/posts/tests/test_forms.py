@@ -78,15 +78,12 @@ class PostsCreateFormTests(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_authorized_client_comment(self):
-        response = self.authorized_client.get(reverse(
-            'post', args=[self.user, self.post.id]))
-        self.assertEqual(response.status_code, HTTPStatus.OK)
         form_data = {
             'text': 'Comment!',
             'author': self.user.id
         }
         response = self.authorized_client.post(
-            reverse('post', args=[self.user, self.post.id]),
+            reverse('add_comment', args=[self.user, self.post.id]),
             data=form_data,
             follow=True
         )
@@ -98,15 +95,12 @@ class PostsCreateFormTests(TestCase):
         self.assertRedirects(response, '/auth/login/?next=' + url)
 
     def test_guest_cant_comment(self):
-        response = self.guest_client.get(reverse(
-            'post', args=[self.user, self.post.id]))
-        self.assertEqual(response.status_code, HTTPStatus.OK)
         form_data = {
             'text': 'Comment!',
             'author': self.user.id
         }
         response = self.guest_client.post(
-            reverse('post', args=[self.user, self.post.id]),
+            reverse('add_comment', args=[self.user, self.post.id]),
             data=form_data,
             follow=True
         )

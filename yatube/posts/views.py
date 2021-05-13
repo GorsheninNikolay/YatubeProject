@@ -10,15 +10,15 @@ from posts.models import Post, Group, Comment, Follow
 User = get_user_model()
 
 """
-Роман Ли, здравствуй! Хотел поблагодарить Вас за помощь!
-Много нового и интересного узнаю благодаря Вашему ревью.
-Одни положительные эмоции, спасибо еще раз! словами не передать
-Вам мою благодарность =)! Но тут возникла проблема...
-При использовании cache_page ломаются тесты.
-Я подумал, что cache_page не стоит использовать в тестах
-и в сдаче работы на ревью, так как данные сначала сохраняются,
-а затем путь к url и этим данным теряется.
-Я пытался найти решение в интернете, но безуспешно.
+Спасибо огромное за помощь! Мои тесты теперь работают, но вот
+тесты pytest от Яндекс я никак не исправлю, из-за cache_page
+pytest сообщает ошибку об тестровании index_paginator:
+[tests/test_paginator.py::TestGroupPaginatorView::
+test_index_paginator_view FAILED [ 15%]], а как комментирую
+cache_page - сразу работает. Есть ли способ именно
+для pytest обойти это ограничение? Или все-таки cache_page нужно использовать
+при размещении проекта на боевой сервер, а при отправки проекта на ревью
+убирать cache?
 """
 # @cache_page(20, key_prefix="index_page")
 
@@ -51,8 +51,6 @@ def post_view(request, username, post_id):
     count = author.posts.count()
     comments = Comment.objects.filter(post=post)
     form = CommentForm()
-    if request.method == "POST":
-        return add_comment(request, username, post_id)
     return render(request, 'posts/post.html', {'author': author,
                                                'count': count,
                                                'post': post,
@@ -124,10 +122,9 @@ def follow_index(request):
 @login_required
 def profile_follow(request, username):
     author = get_object_or_404(User, username=username)
-    if request.user != author:
-        if Follow.objects.filter(user=request.user,
-                                 author=author).exists() is False:
-            Follow.objects.create(user=request.user, author=author)
+    follow = Follow.objects.filter(user=request.user, author=author).exists()
+    if request.user != author and not follow:
+        Follow.objects.create(user=request.user, author=author)
     return redirect('profile', username=author)
 
 
