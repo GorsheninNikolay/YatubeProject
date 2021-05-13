@@ -9,17 +9,6 @@ from posts.models import Post, Group, Comment, Follow
 
 User = get_user_model()
 
-"""
-Спасибо огромное за помощь! Мои тесты теперь работают, но вот
-тесты pytest от Яндекс я никак не исправлю, из-за cache_page
-pytest сообщает ошибку об тестровании index_paginator:
-[tests/test_paginator.py::TestGroupPaginatorView::
-test_index_paginator_view FAILED [ 15%]], а как комментирую
-cache_page - сразу работает. Есть ли способ именно
-для pytest обойти это ограничение? Или все-таки cache_page нужно использовать
-при размещении проекта на боевой сервер, а при отправки проекта на ревью
-убирать cache?
-"""
 # @cache_page(20, key_prefix="index_page")
 
 
