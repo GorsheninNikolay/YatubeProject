@@ -16,10 +16,12 @@ urlpatterns = [
     path("", include("posts.urls")),
     path("about/", include("about.urls")),
     path('500/', server_error, name='500error'),
-    path('404/', page_not_found, name='404error')
+    path('404/', page_not_found, name='404error'),
 ]
 
 if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += (path("__debug__/", include(debug_toolbar.urls)),)
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL,
