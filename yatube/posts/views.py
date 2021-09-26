@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-# from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
@@ -10,9 +10,8 @@ from .forms import CommentForm, PostForm
 
 User = get_user_model()
 
-# @cache_page(20, key_prefix="index_page")
 
-
+@cache_page(20, key_prefix='index_page')
 def index(request):
     post_list = Post.objects.all()
     paginator = Paginator(post_list, 10)
@@ -120,7 +119,7 @@ def follow_index(request):
     paginator = Paginator(post_list, 10)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    return render(request, "posts/follow.html", {'page': page})
+    return render(request, 'posts/follow.html', {'page': page})
 
 
 @login_required
@@ -142,11 +141,11 @@ def profile_unfollow(request, username):
 def page_not_found(request, exception):
     return render(
         request,
-        "misc/404.html",
-        {"path": request.path},
+        'misc/404.html',
+        {'path': request.path},
         status=404
     )
 
 
 def server_error(request):
-    return render(request, "misc/500.html", status=500)
+    return render(request, 'misc/500.html', status=500)
