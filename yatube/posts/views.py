@@ -1,11 +1,12 @@
-from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model
 # from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
+from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import PostForm, CommentForm
-from posts.models import Post, Group, Comment, Follow
+from posts.models import Comment, Follow, Group, Post
+
+from .forms import CommentForm, PostForm
 
 User = get_user_model()
 
@@ -89,6 +90,15 @@ def post_edit(request, username, post_id):
                                                     'author': author,
                                                     'post_id': post_id,
                                                     'post': post})
+
+
+@login_required
+def post_delete(request, username, post_id):
+    post = get_object_or_404(Post, pk=post_id, author__username=(username))
+    author = post.author
+    if request.user == author:
+        post.delete()
+    return redirect('index')
 
 
 @login_required

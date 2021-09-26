@@ -44,6 +44,11 @@
             Редактировать
           </a>
           {% endif %}
+          {% if user == post.author %}
+          <a class="btn btn-sm btn-danger" href="{% url 'post_delete' post.author.username post.id %}" role="button">
+            Удалить
+          </a>
+          {% endif %}
         </div>
   
         <!-- Дата публикации поста -->
