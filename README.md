@@ -51,7 +51,8 @@ pip install -r requirements.txt
 cd yatube
 ```
 8. Создание миграций
-``` python manage.py migrate 
+``` 
+python manage.py migrate 
 ```
 9. Запуск проекта
 ```
