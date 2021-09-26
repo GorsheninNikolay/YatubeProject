@@ -4,13 +4,12 @@ from typing import Optional
 
 from django import forms, http
 from django.conf import settings
-from django.core.cache import cache
-from django.urls import reverse
-from django.test import Client, TestCase
 from django.contrib.auth import get_user_model
+from django.core.cache import cache
 from django.core.files.uploadedfile import SimpleUploadedFile
-
-from posts.models import Post, Group, Follow
+from django.test import Client, TestCase
+from django.urls import reverse
+from posts.models import Follow, Group, Post
 
 User = get_user_model()
 
@@ -63,7 +62,7 @@ class PostsPagesTests(TestCase):
         self.authorized_client.force_login(self.user)
         self.another_authorized_client.force_login(self.another_user)
 
-    def post_fields_test(self, response: http,
+    def post_fields_test(self, response: http.HttpResponse,
                          page: str, n: Optional[int] = None) -> None:
         if n is not None:
             page_object = response.context[page][n]
@@ -126,6 +125,20 @@ class PostsPagesTests(TestCase):
         response = self.guest_client.get(reverse('post',
                                          args=[self.user, self.post.id]))
         self.post_fields_test(response, 'post')
+
+    def test_post_delete_by_author(self):
+        """Post can be deleted by author"""
+        posts_count = Post.objects.count()
+        self.authorized_client.get(reverse('post_delete',
+                                   args=[self.user, self.post.id]))
+        self.assertEqual(posts_count - 1, Post.objects.count())
+
+    def test_post_delete_by_another_user(self):
+        """Post can not be deleted by another user"""
+        posts_count = Post.objects.count()
+        self.another_authorized_client.get(reverse('post_delete',
+                                           args=[self.user, self.post.id]))
+        self.assertEqual(posts_count, Post.objects.count())
 
     def test_profile_shows_correct_context(self):
         """Profile formed with correct context."""
