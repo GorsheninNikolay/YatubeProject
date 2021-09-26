@@ -21,7 +21,7 @@ YatubeProject
 
 Развертывание проекта
 -
-1. Зайдите/установите GitBash
+1. Зайдите в GitBash, при необходимости установите
 2. При помощи команд cd "каталог" - перейти в каталог и cd .. - подняться на уровень вверх, перейдите в нужный каталог для копирования репозитория
 3. Введите команду git clone https://github.com/GorsheninNikolay/YatubeProject
 4. Введите в консоли cd YatubeProject и выполните команду python -m venv venv для создания виртуальный среды
@@ -47,7 +47,7 @@ BackEnd
 -
 *Django v 2.2.6
 
-*Python 2.7
+*Python 3.7.3
 
 *GitBash
 
