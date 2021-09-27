@@ -81,25 +81,26 @@ python manage.py runserver
 Системные требования
 ----
 
-Python 3.7.3
+- Python 3.7.3
 
-GitBash
+- GitBash
 
 Стек используемых технологий
 ----
 
 ### BackEnd
-*Django v 2.2.6
 
-*Python 3.7.3
+- Django v 2.2.6
 
-*GitBash
+- Python 3.7.3
+
+- GitBash
 
 ### FrontEnd
-*Программа NicePage
+- Программа NicePage
 
-*HTML
+- HTML
 
-*CSS
+- CSS
 
-*JavaScript
+- JavaScript
