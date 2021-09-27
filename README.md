@@ -20,7 +20,7 @@ YatubeProject
 
 # В планах:
 
-:black_square_button: Провести полный редизайн сайта
+:black_square_button: Провести полный редизайн
 
 :black_square_button: Добавить анонимный опрос и связать данный процесс с API
 
