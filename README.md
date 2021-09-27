@@ -22,7 +22,7 @@ YatubeProject
 
 :black_square_button: Провести полный редизайн
 
-:black_square_button: Добавить анонимный опрос и связать данный процесс с API
+:black_square_button: Добавить анонимный опрос и связать данный процесс с API 
 
 # Развертывание проекта
 
@@ -37,7 +37,8 @@ cd "каталог"
 ```
 cd .. 
 ```
-### Перейдите в нужный каталог для клонирования репозитория
+:exclamation: Перейдите в нужный каталог для клонирования репозитория :exclamation:
+
 3. Клонирование репозитория:
 ```
 git clone https://github.com/GorsheninNikolay/YatubeProject
